@@ -38,7 +38,13 @@ jobs:
         working-directory: ./
       - name: ubuntu-latest-host-test
         run: |
+          echo
+          echo ${{ matrix.compiler }} -v
+          echo
+          ${{ matrix.compiler }} -v
+          echo Compile project boost_math_test_qemu
           ${{ matrix.compiler }} -std=${{ matrix.standard }} -Wall -Wpedantic -Wextra -Wconversion -Wsign-conversion -Wundef boost_math_test_qemu_cbrt_tgamma.cpp -I. -I../boost-root -o boost_math_test_qemu.exe
           ls -la boost_math_test_qemu.exe
+          echo Run project boost_math_test_qemu.exe
           ./boost_math_test_qemu.exe
         working-directory: ./
