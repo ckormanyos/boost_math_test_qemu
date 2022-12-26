@@ -20,7 +20,7 @@ The tests include:
 
 The QEMU test cycle involves the following steps:
   - Compile and link the code to absolute ELF-File.
-  - Use `arm-none-eabi-gcc` for compilation (switch off RTTI, exceptions, etc.).
+  - Use `gcc-arm-none-eabi` for compilation (switch off RTTI, exceptions, etc.).
   - Compile for STM32F429 ARM(R)-based Cortex(R) M4F core.
   - Start QEMU for the target.
   - In another thread (another core/Bash-session), load the ELF-File in a QEMU-debug session controlled by Python GDB script.
@@ -35,9 +35,10 @@ on a _bare_ _metal_ ARM(R) controller.
 ## Tools Used
 
 The following tools are used:
-  - We use `arm-none-abi-gcc` 10 for compiling the embedded code directly from ARM(R) LTD.
-  - QEMU uses the xpack distribution found (TBD).
-  - GDB is controlled by Python 2.7 script.
+  - [`gcc-arm-none-eabi 10.3-2021.10-x86_64-linux`](https://developer.arm.com/downloads/-/gnu-rm) from ARM(R) LTD for compiling/linking the embedded code.
+  - QEMU distribution found in [xpack-qemu-arm-7.1.0-1](https://github.com/xpack-dev-tools/qemu-arm-xpack/releases).
+  - GDB controlled by Python 2.7 script, itself needing an installed `libncurses5`.
+  - [Boost.Math](https://github.com/boostorg/math) and [Boost.Multiprecision](https://github.com/boostorg/multiprecision) submodules in their latest states at GitHub.
 
 ## Details on the Application
 
