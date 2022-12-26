@@ -42,11 +42,11 @@ The following tools are used:
 
 ## Details on the Application
 
-The application boots from a tiny self-written
-[self-written startup code](./target/micros/stm32f429/make/single/crt.cpp)
+The application boots from a tiny, self-written
+[startup code](./target/micros/stm32f429/make/single/crt.cpp)
 located at the mocrocontroller's hardware start address.
-Addresses are defined in a
-[specialized Linker-definition file](./target/micros/stm32f429/make/stm32f429.ld).
+Addresses are defined in a specialized
+[Linker-definition file](./target/micros/stm32f429/make/stm32f429.ld).
 
 Following static initialization (zero-clear, data-initialization
 and static constructors), the program jumps to
