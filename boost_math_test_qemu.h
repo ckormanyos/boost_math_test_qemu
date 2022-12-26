@@ -13,15 +13,8 @@
 
   namespace boost { namespace math { namespace test { namespace qemu {
 
-  auto run_boost_math_cbrt_tgamma() -> bool;
-
-  #define BOOST_MATH_TEST_QEMU_TYPE_NONE             0
-  #define BOOST_MATH_TEST_QEMU_TYPE_CBRT_TGAMMA      1
-
-  //#define BOOST_MATH_TEST_QEMU_TYPE BOOST_MATH_TEST_QEMU_TYPE_NONE
-  #define BOOST_MATH_TEST_QEMU_TYPE BOOST_MATH_TEST_QEMU_TYPE_CBRT_TGAMMA
-
-  #define BOOST_MATH_TEST_QEMU_STANDALONE_MAIN
+  auto run_cbrt_tgamma       () -> bool;
+  auto run_cbrt_cpp_dec_float() -> bool;
 
   } } } } // namespace boost::math::test::qemu
 
