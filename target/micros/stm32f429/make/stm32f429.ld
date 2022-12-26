@@ -61,10 +61,6 @@ SECTIONS
     KEEP(*(SORT(.init_array.*)))
     KEEP(*(.init_array*))
     _ctors_end = .;
-    __fini_array_start = .;
-    KEEP (*(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*)))
-    KEEP (*(.fini_array EXCLUDE_FILE (*crtbegin.o *crtbegin?.o *crtend.o *crtend?.o ) .dtors))
-    __fini_array_end = .;
     *(.progmem*)
     . = ALIGN(4);
     *(.text)

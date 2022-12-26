@@ -46,26 +46,25 @@
 #include <boost/math/special_functions/cbrt.hpp>
 #include <boost/multiprecision/cpp_dec_float.hpp>
 
-auto boost::math::test::qemu::run_cbrt_cpp_dec_float() -> bool
+namespace local_cpp_dec_float
 {
   using big_float_backend_type =
     boost::multiprecision::cpp_dec_float<101, std::int32_t, void>;
 
   using big_float_type =
     boost::multiprecision::number<big_float_backend_type, boost::multiprecision::et_off>;
+}
 
-  // Compute a square root.
-  static const big_float_type
-    big_float_arg
-    {
-      big_float_type(UINT32_C(123456)) / 100U
-    };
+extern const local_cpp_dec_float::big_float_type big_float_arg;
 
-  const big_float_type big_float_result = boost::math::cbrt(big_float_arg);
+auto boost::math::test::qemu::run_cbrt_cpp_dec_float() -> bool
+{
+  // Compute a cube root.
+  const local_cpp_dec_float::big_float_type big_float_result = boost::math::cbrt(big_float_arg);
 
   // N[(123456/100)^(1/3), 111]
   // 10.7276369432283170454869317373527647801772956394047834686224956433128028534945259441672192774907629718402457465
-  static const big_float_type
+  static const local_cpp_dec_float::big_float_type
     control
     {
       "10.7276369432283170454869317373527647801772956394047834686224956433128028534945259441672192774907629718402457465"
@@ -76,6 +75,12 @@ auto boost::math::test::qemu::run_cbrt_cpp_dec_float() -> bool
 
   return boost_math_test_qemu_result_is_ok;
 }
+
+const local_cpp_dec_float::big_float_type
+  big_float_arg
+  {
+    local_cpp_dec_float::big_float_type(static_cast<std::uint32_t>(UINT32_C(123456))) / static_cast<unsigned>(UINT8_C(100))
+  };
 
 #if defined(BOOST_MATH_TEST_QEMU_STANDALONE_MAIN)
 

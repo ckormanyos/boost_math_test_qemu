@@ -58,7 +58,7 @@ auto boost::math::test::qemu::run_cbrt_cpp_bin_float() -> bool
   static const big_float_type
     big_float_arg
     {
-      big_float_type(UINT32_C(123456)) / 100U
+      big_float_type(static_cast<std::uint32_t>(UINT32_C(123456))) / static_cast<unsigned>(UINT8_C(100))
     };
 
   const big_float_type big_float_result = boost::math::cbrt(big_float_arg);
