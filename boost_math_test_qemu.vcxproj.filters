@@ -5,10 +5,34 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Source Files\target">
+      <UniqueIdentifier>{a19c9376-061d-420f-81f7-26dfbb5c36a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\build">
+      <UniqueIdentifier>{cedc216d-cfc0-4a33-82db-a09b3a5e294c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\micros">
+      <UniqueIdentifier>{b797c911-c8e9-45c4-a81c-e5f4ceaf4868}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\micros\stm32f429">
+      <UniqueIdentifier>{a7baeaa4-f279-4fbe-99ab-4864aff76e6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\micros\stm32f429\make">
+      <UniqueIdentifier>{61289875-7734-481a-b680-50ffb759930d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\target\micros\stm32f429\make\single">
+      <UniqueIdentifier>{b9e5e428-c5e4-4232-aee5-fed9d168c67b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="boost_math_test_qemu_cbrt_tgamma.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="target\micros\stm32f429\make\single\crt.cpp">
+      <Filter>Source Files\target\micros\stm32f429\make\single</Filter>
+    </ClCompile>
+    <ClCompile Include="target\micros\stm32f429\make\single\mcal_gcc_cxx_completion.cpp">
+      <Filter>Source Files\target\micros\stm32f429\make\single</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -18,5 +42,13 @@
     <ClInclude Include="boost_math_test_qemu.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="target\build\boost_math_test_qemu.py">
+      <Filter>Source Files\target\build</Filter>
+    </None>
+    <None Include="target\micros\stm32f429\make\stm32f429.ld">
+      <Filter>Source Files\target\micros\stm32f429\make</Filter>
+    </None>
   </ItemGroup>
 </Project>

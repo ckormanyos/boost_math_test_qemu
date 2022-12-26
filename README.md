@@ -7,4 +7,5 @@ boost_math_test_qemu
 </p>
 
 This repository tests certain small parts of Boost.Math
-on a bare-metal embedded system with CI runs verified via qemu.
+on a bare-metal ARM(R)-based embedded microcontroller system.
+CI runs using qemu verify correct operation on the embedded target.
