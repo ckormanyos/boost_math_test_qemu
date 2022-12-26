@@ -44,12 +44,12 @@
 
 #include <boost/config.hpp>
 #include <boost/math/special_functions/cbrt.hpp>
-#include <boost/multiprecision/cpp_dec_float.hpp>
+#include <boost/multiprecision/cpp_bin_float.hpp>
 
-auto boost::math::test::qemu::run_cbrt_cpp_dec_float() -> bool
+auto boost::math::test::qemu::run_cbrt_cpp_bin_float() -> bool
 {
   using big_float_backend_type =
-    boost::multiprecision::cpp_dec_float<101, std::int32_t, void>;
+    boost::multiprecision::cpp_bin_float<101, boost::multiprecision::backends::digit_base_10, void, std::int32_t>;
 
   using big_float_type =
     boost::multiprecision::number<big_float_backend_type, boost::multiprecision::et_off>;
@@ -94,7 +94,7 @@ extern "C"
 
     for(unsigned i = 0U; i < 64U; ++i)
     {
-      result_is_ok &= boost::math::test::qemu::run_cbrt_cpp_dec_float();
+      result_is_ok &= boost::math::test::qemu::run_cbrt_cpp_bin_float();
     }
 
     qemu_standalone_result =

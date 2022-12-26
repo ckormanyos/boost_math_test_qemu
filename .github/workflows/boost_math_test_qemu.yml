@@ -43,7 +43,7 @@ jobs:
           echo
           ${{ matrix.compiler }} -v
           echo Compile project boost_math_test_qemu
-          ${{ matrix.compiler }} -std=${{ matrix.standard }} -Wall -Wpedantic -Wextra -Wconversion -Wsign-conversion -Wundef -O2 -I. -I../boost-root ./boost_math_test_qemu.cpp ./boost_math_test_qemu_cbrt_cpp_dec_float.cpp ./boost_math_test_qemu_cbrt_tgamma.cpp -o boost_math_test_qemu.exe
+          ${{ matrix.compiler }} -std=${{ matrix.standard }} -Wall -Wpedantic -Wextra -Wconversion -Wsign-conversion -Wundef -O2 -I. -I../boost-root ./boost_math_test_qemu.cpp ./boost_math_test_qemu_cbrt_cpp_bin_float.cpp ./boost_math_test_qemu_cbrt_cpp_dec_float.cpp ./boost_math_test_qemu_cbrt_tgamma.cpp -o boost_math_test_qemu.exe
           ls -la boost_math_test_qemu.exe
           echo Run project boost_math_test_qemu.exe
           ./boost_math_test_qemu.exe
@@ -56,7 +56,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        testcase: [ cbrt_tgamma, cbrt_cpp_dec_float ]
+        testcase: [ cbrt_tgamma, cbrt_cpp_bin_float, cbrt_cpp_dec_float ]
         standard: [ c++14, c++17, c++2a ]
     steps:
       - uses: actions/checkout@v3

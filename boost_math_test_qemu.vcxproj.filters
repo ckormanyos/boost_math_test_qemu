@@ -40,6 +40,9 @@
     <ClCompile Include="boost_math_test_qemu_cbrt_cpp_dec_float.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="boost_math_test_qemu_cbrt_cpp_bin_float.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boost_math_test_qemu_detail.h">

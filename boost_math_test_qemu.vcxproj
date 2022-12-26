@@ -145,6 +145,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="boost_math_test_qemu.cpp" />
+    <ClCompile Include="boost_math_test_qemu_cbrt_cpp_bin_float.cpp" />
     <ClCompile Include="boost_math_test_qemu_cbrt_cpp_dec_float.cpp" />
     <ClCompile Include="boost_math_test_qemu_cbrt_tgamma.cpp" />
     <ClCompile Include="target\micros\stm32f429\make\single\crt.cpp">

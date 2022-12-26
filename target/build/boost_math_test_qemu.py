@@ -63,7 +63,7 @@ class qemu_emulator:
 
     # Set gdb Bp
     def set_gdb_break_point(self):
-        my_bp = gdb.Breakpoint('app_benchmark_get_standalone_result')
+        my_bp = gdb.Breakpoint('get_qemu_standalone_result')
         return my_bp
 
     # Delete gdb Bp
@@ -72,7 +72,7 @@ class qemu_emulator:
 
     # Get gdb result
     def get_gdb_result(self):
-       my_result = gdb.parse_and_eval("app_benchmark_standalone_result")
+       my_result = gdb.parse_and_eval("qemu_standalone_result")
        return my_result
 
     # Convert from gdb type to hex
