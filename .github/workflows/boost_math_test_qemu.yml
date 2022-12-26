@@ -95,9 +95,13 @@ jobs:
           echo Create project objects and names
           echo
           emu_env/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-objcopy ./bin/boost_math_test_qemu.elf -O ihex ./bin/boost_math_test_qemu.hex
+          emu_env/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-nm --numeric-sort --print-size ./bin/boost_math_test_qemu.elf | emu_env/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-c++filt > ./bin/boost_math_test_qemu_cppfilt.txt
           echo Verify project objects and names
           echo
-          ls -la ./bin/boost_math_test_qemu.elf ./bin/boost_math_test_qemu.hex ./bin/boost_math_test_qemu.map
+          ls -la ./bin/boost_math_test_qemu.elf ./bin/boost_math_test_qemu.hex ./bin/boost_math_test_qemu.map ./bin/boost_math_test_qemu_cppfilt.txt
+          echo
+          echo Print all symbols in absolute ELF file
+          cat ./bin/boost_math_test_qemu_cppfilt.txt
         working-directory: ./
       - name: emulate-target-stm32f429
         run: |
