@@ -34,6 +34,12 @@
     <ClCompile Include="target\micros\stm32f429\make\single\mcal_gcc_cxx_completion.cpp">
       <Filter>Source Files\target\micros\stm32f429\make\single</Filter>
     </ClCompile>
+    <ClCompile Include="boost_math_test_qemu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="boost_math_test_qemu_cbrt_cpp_dec_float.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boost_math_test_qemu_detail.h">

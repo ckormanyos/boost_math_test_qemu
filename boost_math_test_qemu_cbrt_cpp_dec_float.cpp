@@ -16,6 +16,10 @@
 #pragma GCC diagnostic ignored "-Wfloat-equal"
 #endif
 
+#if !defined(BOOST_MP_STANDALONE)
+#define BOOST_MP_STANDALONE
+#endif
+
 #if !defined(BOOST_MATH_STANDALONE)
 #define BOOST_MATH_STANDALONE
 #endif
@@ -38,61 +42,44 @@
 
 #define BOOST_MATH_PROMOTE_FLOAT_POLICY false
 
-#include <boost/cstdfloat.hpp>
-#include <boost/math/constants/constants.hpp>
+#include <boost/config.hpp>
 #include <boost/math/special_functions/cbrt.hpp>
-#include <boost/math/special_functions/gamma.hpp>
+#include <boost/multiprecision/cpp_dec_float.hpp>
 
-using my_float_type = boost::float64_t;
-
-extern my_float_type cb;
-extern my_float_type x;
-
-auto boost::math::test::qemu::run_cbrt_tgamma() -> bool
+auto boost::math::test::qemu::run_cbrt_cpp_dec_float() -> bool
 {
-  static_assert(std::numeric_limits<my_float_type>::digits >= 53,
-                "Error: Incorrect float64_t type definition");
+  using big_float_backend_type =
+  #if defined(APP_BENCHMARK_TYPE_BOOST_BOOST_MULTIPRECISION_CBRT_USE_BIN_FLOAT)
+    boost::multiprecision::cpp_bin_float<101, boost::multiprecision::backends::digit_base_10, void, std::int32_t>;
+  #else
+    boost::multiprecision::cpp_dec_float<101, std::int32_t, void>;
+  #endif
 
-  // Table[N[Gamma[((456 n)/(100 Pi))^(1/3)], 21], {n, 1, 101, 10}]
+  using big_float_type =
+    boost::multiprecision::number<big_float_backend_type, boost::multiprecision::et_off>;
 
-  constexpr std::array<my_float_type, 11U> app_benchmark_control =
-  {{
-    my_float_type(BOOST_FLOATMAX_C(0.939131814550229181011151980662907952)),
-    my_float_type(BOOST_FLOATMAX_C(1.34645417009670049450881257836426513)),
-    my_float_type(BOOST_FLOATMAX_C(2.24865197861464813284549389915695163)),
-    my_float_type(BOOST_FLOATMAX_C(3.54010862139328036868593771662409929)),
-    my_float_type(BOOST_FLOATMAX_C(5.32678290474027222700118887035805285)),
-    my_float_type(BOOST_FLOATMAX_C(7.74480814145513084404751762515242577)),
-    my_float_type(BOOST_FLOATMAX_C(10.9608033153333194319415514453787809)),
-    my_float_type(BOOST_FLOATMAX_C(15.1764307769968425576636827673821899)),
-    my_float_type(BOOST_FLOATMAX_C(20.6341757772658373762859051310361056)),
-    my_float_type(BOOST_FLOATMAX_C(27.6240717359003789929215625751284983)),
-    my_float_type(BOOST_FLOATMAX_C(36.4914014381246411895171472115548616))
-  }};
+  // Compute a square root.
+  static const big_float_type
+    big_float_arg
+    {
+      big_float_type(UINT32_C(123456)) / 100U
+    };
 
-  static unsigned app_benchmark_n_index      = 0U;
-  static unsigned app_benchmark_n_value      = 1U;
-  static bool     app_benchmark_result_is_ok = true;
+  const big_float_type big_float_result = boost::math::cbrt(big_float_arg);
 
-  cb = boost::math::tgamma(boost::math::cbrt(x * my_float_type(app_benchmark_n_value)));
+  // N[(123456/100)^(1/3), 111]
+  // 10.7276369432283170454869317373527647801772956394047834686224956433128028534945259441672192774907629718402457465
+  static const big_float_type
+    control
+    {
+      "10.7276369432283170454869317373527647801772956394047834686224956433128028534945259441672192774907629718402457465"
+    };
 
-  app_benchmark_result_is_ok &= detail::is_close_fraction(cb, app_benchmark_control[app_benchmark_n_index]);
-
-  app_benchmark_n_value += 10U;
-
-  ++app_benchmark_n_index;
-
-  if(app_benchmark_n_index == app_benchmark_control.size())
-  {
-    app_benchmark_n_index = 0U;
-    app_benchmark_n_value = 1U;
-  }
+  // Compare the calculated result with the known control value.
+  const bool app_benchmark_result_is_ok = detail::is_close_fraction(big_float_result, control);
 
   return app_benchmark_result_is_ok;
 }
-
-my_float_type cb;
-my_float_type x = my_float_type(BOOST_FLOATMAX_C(4.56)) / boost::math::constants::pi<my_float_type>();
 
 #if defined(BOOST_MATH_TEST_QEMU_STANDALONE_MAIN)
 
@@ -111,7 +98,7 @@ extern "C"
 
     for(unsigned i = 0U; i < 64U; ++i)
     {
-      result_is_ok &= boost::math::test::qemu::run_cbrt_tgamma();
+      result_is_ok &= boost::math::test::qemu::run_cbrt_cpp_dec_float();
     }
 
     app_benchmark_standalone_result =

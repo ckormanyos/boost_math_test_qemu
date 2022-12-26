@@ -73,19 +73,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir);C:\boost\modular_boost\boost\libs\math\include;C:\boost\modular_boost\boost\libs\multiprecision\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir);C:\boost\modular_boost\boost\libs\config\include;C:\boost\modular_boost\boost\libs\math\include;C:\boost\modular_boost\boost\libs\multiprecision\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir);C:\boost\modular_boost\boost\libs\math\include;C:\boost\modular_boost\boost\libs\multiprecision\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir);C:\boost\modular_boost\boost\libs\config\include;C:\boost\modular_boost\boost\libs\math\include;C:\boost\modular_boost\boost\libs\multiprecision\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir);C:\boost\modular_boost\boost\libs\math\include;C:\boost\modular_boost\boost\libs\multiprecision\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir);C:\boost\modular_boost\boost\libs\config\include;C:\boost\modular_boost\boost\libs\math\include;C:\boost\modular_boost\boost\libs\multiprecision\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir);C:\boost\modular_boost\boost\libs\math\include;C:\boost\modular_boost\boost\libs\multiprecision\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir);C:\boost\modular_boost\boost\libs\config\include;C:\boost\modular_boost\boost\libs\math\include;C:\boost\modular_boost\boost\libs\multiprecision\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -144,6 +144,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="boost_math_test_qemu.cpp" />
+    <ClCompile Include="boost_math_test_qemu_cbrt_cpp_dec_float.cpp" />
     <ClCompile Include="boost_math_test_qemu_cbrt_tgamma.cpp" />
     <ClCompile Include="target\micros\stm32f429\make\single\crt.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
