@@ -38,7 +38,7 @@ on a _bare_ _metal_ ARM(R) controller.
 The following tools are used:
   - [`gcc-arm-none-eabi 10.3-2021.10-x86_64-linux`](https://developer.arm.com/downloads/-/gnu-rm) from ARM(R) LTD for compiling/linking the embedded code.
   - QEMU distribution found in [xpack-qemu-arm-7.1.0-1](https://github.com/xpack-dev-tools/qemu-arm-xpack/releases).
-  - GDB controlled by Python 2.7 script, itself needing an installed `libncurses5`.
+  - GDB controlled by Python 2.7 script (i.e., [boost_math_test_qemu.py](./target/build/boost_math_test_qemu.py)), where Python 2.7 itself needs an installed `libncurses5`.
   - [Boost.Math](https://github.com/boostorg/math) and [Boost.Multiprecision](https://github.com/boostorg/multiprecision) submodules in their latest states at GitHub.
 
 ## Details on the Application
@@ -56,8 +56,10 @@ a skinny logic to be used in a GDB breakpoint when running
 in QEMU.
 
 In each test case, the local static variable `qemu_standalone_result`
-is set to the self--invented, special key-value `0xF00DCAFE`
-to indicate test pass (fail sets the value to `0xFFFFFFFF`).
+is set to the self-invented, special key-value `0xF00DCAFE`
+to indicate test-pass (fail sets the value to `0xFFFFFFFF`).
+The key-value `0xF00DCAFE` is explicitly checked by the Python-GDB script
+in order to provide a strong determination of test-pass.
 
 ## Building the Application
 
