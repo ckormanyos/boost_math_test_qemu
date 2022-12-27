@@ -15,6 +15,7 @@ The tests include:
   - [`boost_math_test_qemu_cbrt_cpp_bin_float.cpp`](./boost_math_test_qemu_cbrt_cpp_bin_float.cpp) which computes a $101$ digit cube root using Boost.Math's `cbrt()` function and Boost.Multiprecision's `cpp_bin_float` class.
   - [`boost_math_test_qemu_cbrt_cpp_dec_float.cpp`](./boost_math_test_qemu_cbrt_cpp_dec_float.cpp) which does the same cube root calculation, this time with the `cpp_dec_float` class.
   - [`boost_math_test_qemu_cbrt_tgamma.cpp`](./boost_math_test_qemu_cbrt_tgamma.cpp) performs various 64-bit floating-point calculations involving the Gamma function of cube root values.
+  - [`boost_math_test_qemu_cyl_bessel_j.cpp`](./boost_math_test_qemu_cyl_bessel_j.cpp) tests a small selection of cylindrical Bessel function of small order.
 
 ## QEMU Test Cycle
 
