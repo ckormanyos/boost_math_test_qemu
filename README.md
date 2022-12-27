@@ -37,7 +37,10 @@ Clear and easy-to-understand steps can be found in the
 `ubuntu-boost-math-test-qemu` jobs in CI.
 
 This repository provides keen insight on running and testing
-small parts of Boost.Math (and Boost.Multiprecision)
+small parts of
+[Boost.Math](https://github.com/boostorg/math)
+and
+[Boost.Multiprecision](https://github.com/boostorg/multiprecision)
 on a _bare_ _metal_ ARM(R) controller.
 
 ## Tools Used
@@ -72,3 +75,62 @@ in order to provide a strong determination of test-pass.
 
 Build on `*nix*` is easy using the tools and commands
 shown in CI.
+
+Here are sample commands for building and linking one of the tests.
+Let's take, for instance, the test case `boost_math_test_qemu_cbrt_tgamma.cpp`.
+
+### Prerequisites: The Embedded Compiler and Boost Math/Multiprecision
+
+  - For build and link, the main prerequisite is to get (via `wget` or similar)
+  the embedded compiler. Let's place this, for example, in a self-created
+  directory called `emu_env` within the root directory of the repo
+  `boost_math_test_qemu`.
+  - A second prerequisite is to get and provide the include path of
+  the Boost Math and Multiprecision headers. In the command below,
+  the relevant include paths are provided by the command-fragment `-I../boost-root`.
+  You can, of course, use a different location of your choice.
+
+```sh
+cd boost_math_test_qemu
+mkdir -p emu_env && cd emu_env
+wget --no-check-certificate https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2
+tar -xvf gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2
+```
+
+### Compile the Embedded Code
+
+Build and link in Bash.
+
+```sh
+cd boost_math_test_qemu
+emu_env/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-g++ -std=c++14 -Wall -Wextra -Wpedantic -O2 -g -gdwarf-2 -ffunction-sections -fdata-sections -x c++ -fno-rtti -fno-use-cxa-atexit -fno-exceptions -fno-nonansi-builtins -fno-threadsafe-statics -fno-enforce-eh-specs -ftemplate-depth=128 -mcpu=cortex-m4 -mtune=cortex-m4 -mthumb -mfloat-abi=soft -mno-unaligned-access -mno-long-calls -DBOOST_MATH_TEST_QEMU_STANDALONE_MAIN -I. -I../boost-root ./boost_math_test_qemu_cbrt_tgamma.cpp ./target/micros/stm32f429/make/single/crt.cpp -nostartfiles -Wl,--gc-sections -Wl,-Map,./bin/boost_math_test_qemu.map -T ./target/micros/stm32f429/make/stm32f429.ld -Wl,--print-memory-usage --specs=nano.specs --specs=nosys.specs -o ./bin/boost_math_test_qemu.elf
+```
+
+This super-long command compiles the C++ source file
+`./boost_math_test_qemu_cbrt_tgamma.cpp`
+together with its startup code
+`./target/micros/stm32f429/make/single/crt.cpp`.
+
+A bunch of command-line switches are used.
+The command also performs a full-link to absolute object ELF-File.
+
+The result of this command is: `./bin/boost_math_test_qemu.elf`.
+This command assumes that the embedded compiler has been retrieved
+with `wget` (or similar) and unpacked as shown above
+in the self-created directory `emu_env`.
+
+### Extract HEX and Demangled Symbols/Sizes
+
+The following commands extract the HEX-file and provide a text-based listing
+of the demangled symbols and their sizes within the object file.
+
+```sh
+cd boost_math_test_qemu
+emu_env/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-objcopy ./bin/boost_math_test_qemu.elf -O ihex ./bin/boost_math_test_qemu.hex
+emu_env/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-nm --numeric-sort --print-size ./bin/boost_math_test_qemu.elf | emu_env/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-c++filt > ./bin/boost_math_test_qemu_cppfilt.txt
+```
+
+The results of these commands are: `./bin/boost_math_test_qemu.hex`
+and `./bin/boost_math_test_qemu_cppfilt.txt`. The latter text-based
+list file contains full demangled names and sizes of the components
+in the compiled executable on the metal.
