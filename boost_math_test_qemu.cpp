@@ -36,6 +36,7 @@ int main()
   result_is_ok = (local::runner(boost::math::test::qemu::run_cbrt_cpp_bin_float) && result_is_ok);
   result_is_ok = (local::runner(boost::math::test::qemu::run_cbrt_cpp_dec_float) && result_is_ok);
   result_is_ok = (local::runner(boost::math::test::qemu::run_cbrt_tgamma       ) && result_is_ok);
+  result_is_ok = (local::runner(boost::math::test::qemu::run_cyl_bessel_j      ) && result_is_ok);
 
   {
     auto flg = std::cout.flags();

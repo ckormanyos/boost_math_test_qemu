@@ -16,6 +16,7 @@
   auto run_cbrt_cpp_bin_float() -> bool;
   auto run_cbrt_cpp_dec_float() -> bool;
   auto run_cbrt_tgamma       () -> bool;
+  auto run_cyl_bessel_j      () -> bool;
 
   } } } } // namespace boost::math::test::qemu
 

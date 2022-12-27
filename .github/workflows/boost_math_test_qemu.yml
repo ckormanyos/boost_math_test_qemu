@@ -56,7 +56,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        testcase: [ cbrt_tgamma, cbrt_cpp_bin_float, cbrt_cpp_dec_float ]
+        testcase: [ cbrt_cpp_bin_float, cbrt_cpp_dec_float, cbrt_tgamma, cyl_bessel_j ]
         standard: [ c++14, c++17, c++2a ]
     steps:
       - uses: actions/checkout@v3

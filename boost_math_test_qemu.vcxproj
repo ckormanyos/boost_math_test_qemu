@@ -148,6 +148,7 @@
     <ClCompile Include="boost_math_test_qemu_cbrt_cpp_bin_float.cpp" />
     <ClCompile Include="boost_math_test_qemu_cbrt_cpp_dec_float.cpp" />
     <ClCompile Include="boost_math_test_qemu_cbrt_tgamma.cpp" />
+    <ClCompile Include="boost_math_test_qemu_cyl_bessel_j.cpp" />
     <ClCompile Include="target\micros\stm32f429\make\single\crt.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
