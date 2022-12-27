@@ -3,11 +3,18 @@ boost_math_test_qemu
 
 [![Build Status](https://github.com/ckormanyos/boost_math_test_qemu/actions/workflows/boost_math_test_qemu.yml/badge.svg)](https://github.com/ckormanyos/boost_math_test_qemu/actions)
 
-This repository tests certain small parts of Boost.Math
+This repository tests certain small parts of
+[Boost.Math](https://github.com/boostorg/math)
+and
+[Boost.Multiprecision](https://github.com/boostorg/multiprecision)
 on a bare-metal ARM(R)-based embedded microcontroller system.
 
-CI includes tests that verify the correct operation on the embedded target
-using QEMU.
+The emulated target is ST Microelectronics STM32F429ZI,
+having a 32-bit ARM(R) Cortex(R)-M4F core.
+The emulation uses 64-bit software floating-point (without FPU).
+
+CI includes tests that verify the correct operation on the
+embedded target using QEMU.
 
 ## Test Cases
 
@@ -24,7 +31,7 @@ The QEMU test cycle involves the following steps:
   - Use `gcc-arm-none-eabi` for compilation (switch off RTTI, exceptions, etc.).
   - Compile for STM32F429 ARM(R)-based Cortex(R) M4F core.
   - Start QEMU for the target.
-  - In another thread (another core/Bash-session), load the ELF-File in a QEMU-debug session controlled by Python GDB script.
+  - In another core (i.e., a different Bash-instance), load the ELF-File for execution with debug via GDB controlled by Python script.
 
 Clear and easy-to-understand steps can be found in the
 `ubuntu-boost-math-test-qemu` jobs in CI.
