@@ -81,14 +81,14 @@ Let's take, for instance, the test case `boost_math_test_qemu_cbrt_tgamma.cpp`.
 
 ### Prerequisites: The Embedded Compiler and Boost Math/Multiprecision
 
-  - For build and link, the main prerequisite is to get (via `wget`) the embedded
-  compiler. Let's place this, for for example, in a self-created
+  - For build and link, the main prerequisite is to get (via `wget` or similar)
+  the embedded compiler. Let's place this, for example, in a self-created
   directory called `emu_env` within the root directory of the repo
   `boost_math_test_qemu`.
   - A second prerequisite is to get and provide the include path of
   the Boost Math and Multiprecision headers. In the command below,
-  these is in the command-fragment `-I../boost-root`,
-  but you can use a different location.
+  the relevant include paths are provided by the command-fragment `-I../boost-root`.
+  You can, of course, use a different location of your choice.
 
 ```sh
 cd boost_math_test_qemu
@@ -121,7 +121,8 @@ with `wget` and unpacked as shown above in the self-created directory
 
 ### Extract HEX and Demangled Symbols/Sizes
 
-Extract the HEX-file and get demangled symbols.
+The following commands extract the HEX-file and provide a text-based listing
+of the demangled symbols and their sizes within the object file.
 
 ```sh
 cd boost_math_test_qemu
