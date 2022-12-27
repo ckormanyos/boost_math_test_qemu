@@ -76,7 +76,13 @@ shown in CI.
 Here are sample commands for building and linking one of the tests.
 Let's take, for instance, the test case `boost_math_test_qemu_cbrt_tgamma.cpp`.
 
-For build and link, the prerequisite is:
+### Prerequisite: Get the Embedded Compiler
+
+For build and link, the prerequisite is is to get (via `wget`) the embedded
+compiler. Let's place this, for for example, in a self-created
+directory called `emu_env` within the root directory of the repo
+`boost_math_test_qemu`.
+
 
 ```sh
 cd boost_math_test_qemu
@@ -85,19 +91,31 @@ wget --no-check-certificate https://armkeil.blob.core.windows.net/developer/File
 tar -xvf gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2
 ```
 
+### Compile the Embedded Code
+
 Build and link in Bash.
 
 ```sh
 cd boost_math_test_qemu
-emu_env/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-g++ -std=c++14 -Wall -Wextra -Wpedantic -O2 -g -gdwarf-2 -ffunction-sections -fdata-sections -x c++ -fno-rtti -fno-use-cxa-atexit -fno-exceptions -fno-nonansi-builtins -fno-threadsafe-statics -fno-enforce-eh-specs -ftemplate-depth=128 -mcpu=cortex-m4 -mtune=cortex-m4 -mthumb -mfloat-abi=soft -mno-unaligned-access -mno-long-calls -DBOOST_MATH_TEST_QEMU_STANDALONE_MAIN -I. -I../boost-root ./boost_math_test_qemu_${{ matrix.testcase }}.cpp ./target/micros/stm32f429/make/single/crt.cpp -nostartfiles -Wl,--gc-sections -Wl,-Map,./bin/boost_math_test_qemu.map -T ./target/micros/stm32f429/make/stm32f429.ld -Wl,--print-memory-usage --specs=nano.specs --specs=nosys.specs -o ./bin/boost_math_test_qemu.elf
+emu_env/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-g++ -std=c++14 -Wall -Wextra -Wpedantic -O2 -g -gdwarf-2 -ffunction-sections -fdata-sections -x c++ -fno-rtti -fno-use-cxa-atexit -fno-exceptions -fno-nonansi-builtins -fno-threadsafe-statics -fno-enforce-eh-specs -ftemplate-depth=128 -mcpu=cortex-m4 -mtune=cortex-m4 -mthumb -mfloat-abi=soft -mno-unaligned-access -mno-long-calls -DBOOST_MATH_TEST_QEMU_STANDALONE_MAIN -I. -I../boost-root ./boost_math_test_qemu_cbrt_tgamma.cpp ./target/micros/stm32f429/make/single/crt.cpp -nostartfiles -Wl,--gc-sections -Wl,-Map,./bin/boost_math_test_qemu.map -T ./target/micros/stm32f429/make/stm32f429.ld -Wl,--print-memory-usage --specs=nano.specs --specs=nosys.specs -o ./bin/boost_math_test_qemu.elf
 ```
+
+This super-long command compiles the C++ source file
+`./boost_math_test_qemu_cbrt_tgamma.cpp`
+together with its startup code
+`./target/micros/stm32f429/make/single/crt.cpp`.
+
+A bunch of command-line switches are used.
+The command also performs a full-link to absolute object ELF-File.
 
 The result of this command is: `./bin/boost_math_test_qemu.elf`.
 This command assumes that the embedded compiler has been retrieved
 with `wget` and unpacked as shown above in the self-created directory
 `emu_env`.
 
-Extract HEX-file and get demangled symbols.
+### Extract HEX and Demangled Symbols/Sizes
+
+Extract the HEX-file and get demangled symbols.
 
 ```sh
 cd boost_math_test_qemu
