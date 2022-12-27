@@ -116,8 +116,8 @@ The command also performs a full-link to absolute object ELF-File.
 
 The result of this command is: `./bin/boost_math_test_qemu.elf`.
 This command assumes that the embedded compiler has been retrieved
-with `wget` and unpacked as shown above in the self-created directory
-`emu_env`.
+with `wget` (or similar) and unpacked as shown above
+in the self-created directory `emu_env`.
 
 ### Extract HEX and Demangled Symbols/Sizes
 
@@ -131,6 +131,6 @@ emu_env/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-nm --numeric-sort --pri
 ```
 
 The results of these commands are: `./bin/boost_math_test_qemu.hex`
-and `./bin/boost_math_test_qemu_cppfilt.txt`, where the latter text
-file contains full demangled names and sizes of the components
+and `./bin/boost_math_test_qemu_cppfilt.txt`. The latter text-based
+list file contains full demangled names and sizes of the components
 in the compiled executable on the metal.
