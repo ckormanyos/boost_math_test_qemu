@@ -90,10 +90,10 @@ extern "C"
 {
   extern volatile std::uint32_t qemu_standalone_result;
 
-  auto boost_math_test_qemu_run_standalone       (void) -> bool;
-  auto get_qemu_standalone_result(void) -> bool;
+  auto qemu_run_standalone       (void) -> bool;
+  auto qemu_get_standalone_result(void) -> bool;
 
-  auto boost_math_test_qemu_run_standalone(void) -> bool
+  auto qemu_run_standalone(void) -> bool
   {
     auto result_is_ok = true;
 
@@ -111,7 +111,7 @@ extern "C"
     return result_is_ok;
   }
 
-  auto get_qemu_standalone_result(void) -> bool
+  auto qemu_get_standalone_result(void) -> bool
   {
     volatile auto result_is_ok =
       (qemu_standalone_result == static_cast<std::uint32_t>(UINT32_C(0xF00DCAFE)));
@@ -124,8 +124,8 @@ int main()
 {
   auto result_is_ok = true;
 
-  result_is_ok = (::boost_math_test_qemu_run_standalone       () && result_is_ok);
-  result_is_ok = (::get_qemu_standalone_result() && result_is_ok);
+  result_is_ok = (::qemu_run_standalone       () && result_is_ok);
+  result_is_ok = (::qemu_get_standalone_result() && result_is_ok);
 
   return (result_is_ok ? 0 : -1);
 }

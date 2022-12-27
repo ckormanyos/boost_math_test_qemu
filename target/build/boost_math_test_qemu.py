@@ -63,7 +63,7 @@ class qemu_emulator:
 
     # Set gdb Bp
     def set_gdb_break_point(self):
-        my_bp = gdb.Breakpoint('get_qemu_standalone_result')
+        my_bp = gdb.Breakpoint('qemu_get_standalone_result')
         return my_bp
 
     # Delete gdb Bp

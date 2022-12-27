@@ -15,6 +15,7 @@ The tests include:
   - [`boost_math_test_qemu_cbrt_cpp_bin_float.cpp`](./boost_math_test_qemu_cbrt_cpp_bin_float.cpp) which computes a $101$ digit cube root using Boost.Math's `cbrt()` function and Boost.Multiprecision's `cpp_bin_float` class.
   - [`boost_math_test_qemu_cbrt_cpp_dec_float.cpp`](./boost_math_test_qemu_cbrt_cpp_dec_float.cpp) which does the same cube root calculation, this time with the `cpp_dec_float` class.
   - [`boost_math_test_qemu_cbrt_tgamma.cpp`](./boost_math_test_qemu_cbrt_tgamma.cpp) performs various 64-bit floating-point calculations involving the Gamma function of cube root values.
+  - [`boost_math_test_qemu_cyl_bessel_j.cpp`](./boost_math_test_qemu_cyl_bessel_j.cpp) tests a small selection of cylindrical Bessel function of small order.
 
 ## QEMU Test Cycle
 
@@ -37,7 +38,7 @@ on a _bare_ _metal_ ARM(R) controller.
 The following tools are used:
   - [`gcc-arm-none-eabi 10.3-2021.10-x86_64-linux`](https://developer.arm.com/downloads/-/gnu-rm) from ARM(R) LTD for compiling/linking the embedded code.
   - QEMU distribution found in [xpack-qemu-arm-7.1.0-1](https://github.com/xpack-dev-tools/qemu-arm-xpack/releases).
-  - GDB controlled by Python 2.7 script, itself needing an installed `libncurses5`.
+  - GDB controlled by Python 2.7 script (i.e., [boost_math_test_qemu.py](./target/build/boost_math_test_qemu.py)), where Python 2.7 itself needs an installed `libncurses5`.
   - [Boost.Math](https://github.com/boostorg/math) and [Boost.Multiprecision](https://github.com/boostorg/multiprecision) submodules in their latest states at GitHub.
 
 ## Details on the Application
@@ -55,8 +56,10 @@ a skinny logic to be used in a GDB breakpoint when running
 in QEMU.
 
 In each test case, the local static variable `qemu_standalone_result`
-is set to the self--invented, special key-value `0xF00DCAFE`
-to indicate test pass (fail sets the value to `0xFFFFFFFF`).
+is set to the self-invented, special key-value `0xF00DCAFE`
+to indicate test-pass (fail sets the value to `0xFFFFFFFF`).
+The key-value `0xF00DCAFE` is explicitly checked by the Python-GDB script
+in order to provide a strong determination of test-pass.
 
 ## Building the Application
 

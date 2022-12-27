@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-//  Copyright Christopher Kormanyos 2021 - 2022.
+//  Copyright Christopher Kormanyos 2022.
 //  Distributed under the Boost Software License,
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt
 //  or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -39,60 +39,72 @@
 #define BOOST_MATH_PROMOTE_FLOAT_POLICY false
 
 #include <boost/cstdfloat.hpp>
-#include <boost/math/constants/constants.hpp>
-#include <boost/math/special_functions/cbrt.hpp>
-#include <boost/math/special_functions/gamma.hpp>
+#include <boost/math/special_functions/bessel.hpp>
 
 using my_float_type = boost::float64_t;
 
-extern my_float_type cb;
-extern my_float_type x;
+extern my_float_type cyj;
+extern unsigned      xn;
+extern my_float_type v;
 
-auto boost::math::test::qemu::run_cbrt_tgamma() -> bool
+auto boost::math::test::qemu::run_cyl_bessel_j() -> bool
 {
   static_assert(std::numeric_limits<my_float_type>::digits >= 53,
                 "Error: Incorrect float64_t type definition");
 
-  // Table[N[Gamma[((456 n)/(100 Pi))^(1/3)], 21], {n, 1, 101, 10}]
+  // Table[N[BesselJ[123/100, n/10], 36], {n, 1, 10, 1}]
 
-  constexpr std::array<my_float_type, 11U> boost_math_test_qemu_control =
+  using my_float_control_array_type = std::array<my_float_type, 10U>;
+
+  constexpr my_float_control_array_type boost_math_test_qemu_control =
   {{
-    my_float_type(BOOST_FLOATMAX_C(0.939131814550229181011151980662907952)),
-    my_float_type(BOOST_FLOATMAX_C(1.34645417009670049450881257836426513)),
-    my_float_type(BOOST_FLOATMAX_C(2.24865197861464813284549389915695163)),
-    my_float_type(BOOST_FLOATMAX_C(3.54010862139328036868593771662409929)),
-    my_float_type(BOOST_FLOATMAX_C(5.32678290474027222700118887035805285)),
-    my_float_type(BOOST_FLOATMAX_C(7.74480814145513084404751762515242577)),
-    my_float_type(BOOST_FLOATMAX_C(10.9608033153333194319415514453787809)),
-    my_float_type(BOOST_FLOATMAX_C(15.1764307769968425576636827673821899)),
-    my_float_type(BOOST_FLOATMAX_C(20.6341757772658373762859051310361056)),
-    my_float_type(BOOST_FLOATMAX_C(27.6240717359003789929215625751284983)),
-    my_float_type(BOOST_FLOATMAX_C(36.4914014381246411895171472115548616))
+    static_cast<my_float_type>(BOOST_FLOATMAX_C(0.022384094800424078635130529844793803)),
+    static_cast<my_float_type>(BOOST_FLOATMAX_C(0.052329252391407531307435184345226877)),
+    static_cast<my_float_type>(BOOST_FLOATMAX_C(0.085683437351809687785091267647371436)),
+    static_cast<my_float_type>(BOOST_FLOATMAX_C(0.121101214488587461397609703216026929)),
+    static_cast<my_float_type>(BOOST_FLOATMAX_C(0.157737296526501682321434739413437594)),
+    static_cast<my_float_type>(BOOST_FLOATMAX_C(0.194945869633552745026958864087027370)),
+    static_cast<my_float_type>(BOOST_FLOATMAX_C(0.232184726291181620217067657303383795)),
+    static_cast<my_float_type>(BOOST_FLOATMAX_C(0.268975614426188781953361485754411729)),
+    static_cast<my_float_type>(BOOST_FLOATMAX_C(0.304885613485023234627936201325996814)),
+    static_cast<my_float_type>(BOOST_FLOATMAX_C(0.339517879133361150735582864456735830)),
   }};
 
   static unsigned boost_math_test_qemu_n_index      = 0U;
-  static unsigned boost_math_test_qemu_n_value      = 1U;
   static bool     boost_math_test_qemu_result_is_ok = true;
 
-  cb = boost::math::tgamma(boost::math::cbrt(x * my_float_type(boost_math_test_qemu_n_value)));
+  const auto x =
+    static_cast<my_float_type>
+    (
+      static_cast<my_float_type>(xn) / static_cast<my_float_type>(BOOST_FLOATMAX_C(10))
+    );
 
-  boost_math_test_qemu_result_is_ok &= detail::is_close_fraction(cb, boost_math_test_qemu_control[boost_math_test_qemu_n_index]);
+  cyj = boost::math::cyl_bessel_j(v, x);
 
-  boost_math_test_qemu_n_value += 10U;
+  const auto& cyj_ctrl = boost_math_test_qemu_control.at(boost_math_test_qemu_n_index);
+
+  boost_math_test_qemu_result_is_ok =
+    (
+         detail::is_close_fraction(cyj, cyj_ctrl)
+      && boost_math_test_qemu_result_is_ok
+    );
+
+  ++xn;
 
   ++boost_math_test_qemu_n_index;
 
-  if(boost_math_test_qemu_n_index == boost_math_test_qemu_control.size())
+  if(boost_math_test_qemu_n_index == static_cast<unsigned>(std::tuple_size<my_float_control_array_type>::value))
   {
     boost_math_test_qemu_n_index = 0U;
-    boost_math_test_qemu_n_value = 1U;
+    xn                    = 1U;
   }
 
   return boost_math_test_qemu_result_is_ok;
 }
 
-my_float_type cb;
-my_float_type x = my_float_type(BOOST_FLOATMAX_C(4.56)) / boost::math::constants::pi<my_float_type>();
+my_float_type cyj;
+unsigned      xn = static_cast<unsigned>(UINT8_C(1));
+my_float_type v  = static_cast<my_float_type>(BOOST_FLOATMAX_C(1.23));
 
 #if defined(BOOST_MATH_TEST_QEMU_STANDALONE_MAIN)
 
@@ -111,7 +123,7 @@ extern "C"
 
     for(unsigned i = 0U; i < 64U; ++i)
     {
-      result_is_ok &= boost::math::test::qemu::run_cbrt_tgamma();
+      result_is_ok &= boost::math::test::qemu::run_cyl_bessel_j();
     }
 
     qemu_standalone_result =
@@ -136,7 +148,7 @@ int main()
 {
   auto result_is_ok = true;
 
-  result_is_ok = (::qemu_run_standalone       () && result_is_ok);
+  result_is_ok = (::qemu_run_standalone() && result_is_ok);
   result_is_ok = (::qemu_get_standalone_result() && result_is_ok);
 
   return (result_is_ok ? 0 : -1);
