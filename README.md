@@ -37,7 +37,10 @@ Clear and easy-to-understand steps can be found in the
 `ubuntu-boost-math-test-qemu` jobs in CI.
 
 This repository provides keen insight on running and testing
-small parts of Boost.Math (and Boost.Multiprecision)
+small parts of
+[Boost.Math](https://github.com/boostorg/math)
+and
+[Boost.Multiprecision](https://github.com/boostorg/multiprecision)
 on a _bare_ _metal_ ARM(R) controller.
 
 ## Tools Used
@@ -76,13 +79,16 @@ shown in CI.
 Here are sample commands for building and linking one of the tests.
 Let's take, for instance, the test case `boost_math_test_qemu_cbrt_tgamma.cpp`.
 
-### Prerequisite: Get the Embedded Compiler
+### Prerequisites: The Embedded Compiler and Boost Math/Multiprecision
 
-For build and link, the prerequisite is is to get (via `wget`) the embedded
-compiler. Let's place this, for for example, in a self-created
-directory called `emu_env` within the root directory of the repo
-`boost_math_test_qemu`.
-
+  - For build and link, the main prerequisite is to get (via `wget`) the embedded
+  compiler. Let's place this, for for example, in a self-created
+  directory called `emu_env` within the root directory of the repo
+  `boost_math_test_qemu`.
+  - A second prerequisite is to get and provide the include path of
+  the Boost Math and Multiprecision headers. In the command below,
+  these is in the command-fragment `-I../boost-root`,
+  but you can use a different location.
 
 ```sh
 cd boost_math_test_qemu
