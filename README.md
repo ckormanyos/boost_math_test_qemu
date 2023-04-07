@@ -119,10 +119,40 @@ This command assumes that the embedded compiler has been retrieved
 with `wget` (or similar) and unpacked as shown above
 in the self-created directory `emu_env`.
 
+### Running the Simulated Target on QEMU
+
+Once the ELF-file (`./bin/boost_math_test_qemu.elf`) has been created,
+as shown above it, it can run in QEMU on the simulated target.
+
+In a command shell such as a bash session, run QEMU.
+
+```sh
+./emu_env/xpack-qemu-arm-7.1.0-1/bin/qemu-system-gnuarmeclipse --verbose --mcu STM32F429ZI --nographic --gdb tcp::9999 -d unimp,guest_errors &
+```
+
+In a second command shell such as a bash session, run the provided Python script
+for controlling GDB.
+
+```sh
+./emu_env/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-gdb-py ./bin/boost_math_test_qemu.elf -x ./target/build/boost_math_test_qemu.py
+```
+
+The GDB session loads the ELF-file, runs it and
+assesses the value of a success/failure variable in a break-point
+in a key location on the embedded target. In this particular case,
+the internal magic number `0xF00DCAFE` is used to indicate
+success or failure of each numerical test in the brak point.
+Based on this success, the LINUX operating system captures the
+value and controls its own return value from the Python script.
+
 ### Extract HEX and Demangled Symbols/Sizes
 
-The following commands extract the HEX-file and provide a text-based listing
+The following (optional) commands extract the HEX-file and provide a text-based listing
 of the demangled symbols and their sizes within the object file.
+
+These commands are optional and do not need to be executed in order to run
+the simulated target on QEMU.
+
 
 ```sh
 cd boost_math_test_qemu
