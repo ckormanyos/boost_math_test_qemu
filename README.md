@@ -13,7 +13,8 @@ The emulated target is ST Microelectronics STM32F429ZI,
 having a 32-bit ARM(R) Cortex(R)-M4F core.
 The emulation uses 64-bit software floating-point (without FPU).
 
-CI includes tests that verify the correct operation on the
+CI includes tests that verify both proper compilation
+as well as correct numerical result-evaluation on the
 embedded target using QEMU.
 
 ## Test Cases
@@ -76,9 +77,6 @@ in order to provide a strong determination of test-pass.
 Build on `*nix*` is easy using the tools and commands
 shown in CI.
 
-Here are sample commands for building and linking one of the tests.
-Let's take, for instance, the test case `boost_math_test_qemu_cbrt_tgamma.cpp`.
-
 ### Prerequisites: The Embedded Compiler and Boost Math/Multiprecision
 
   - For build and link, the main prerequisite is to get (via `wget` or similar)
@@ -88,7 +86,9 @@ Let's take, for instance, the test case `boost_math_test_qemu_cbrt_tgamma.cpp`.
   - A second prerequisite is to get and provide the include path of
   the Boost Math and Multiprecision headers. In the command below,
   the relevant include paths are provided by the command-fragment `-I../boost-root`.
-  You can, of course, use a different location of your choice.
+  You can, of course, use a different location of your choice for the root of Boost.
+
+Possible commands for setting up the prerequisites are listed below.
 
 ```sh
 cd boost_math_test_qemu
@@ -98,6 +98,9 @@ tar -xvf gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2
 ```
 
 ### Compile the Embedded Code
+
+Below are sample commands for building and linking one of the tests.
+Let's take, for instance, the test case `boost_math_test_qemu_cbrt_tgamma.cpp`.
 
 Build and link in Bash.
 
@@ -111,8 +114,16 @@ This super-long command compiles the C++ source file
 together with its startup code
 `./target/micros/stm32f429/make/single/crt.cpp`.
 
+The command compiles and subsequently performs a full-link
+to absolute object ELF-File.
+
 A bunch of command-line switches are used.
-The command also performs a full-link to absolute object ELF-File.
+
+True fans of bare-metal efficiency might note the
+self-written startup code, DIY linker definntion file,
+compilation with RTT/exceptions switched off,
+and linking with `nano`/`nosys` specs with respect
+to the standard libraries.
 
 The result of this command is: `./bin/boost_math_test_qemu.elf`.
 This command assumes that the embedded compiler has been retrieved
@@ -142,7 +153,8 @@ assesses the value of a success/failure variable in a break-point
 in a key location on the embedded target.
 
 The internal magic number `0xF00DCAFE` is used to indicate
-success or failure of each numerical test in the brak point.
+success or failure, which is _caught_ for each numerical test
+in a break point.
 An example of _catching_ success based on the magic number
 `0xF00DCAFE` is shown, for instance,
 [here](https://github.com/ckormanyos/boost_math_test_qemu/blob/6be4ed755d56408925e2d8c40d9230a5c3fd3076/boost_math_test_qemu_cyl_bessel_j.cpp#L141).
