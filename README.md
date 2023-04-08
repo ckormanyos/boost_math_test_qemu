@@ -120,7 +120,10 @@ to absolute object ELF-File.
 A bunch of command-line switches are used.
 
 True fans of bare-metal efficiency might note the
-self-written startup code, DIY linker definntion file,
+self-written
+[startup code](./target/micros/stm32f429/make/single/crt.cpp),
+DIY
+[linker definition file](./target/micros/stm32f429/make/stm32f429.ld),
 compilation with RTT/exceptions switched off,
 and linking with `nano`/`nosys` specs with respect
 to the standard libraries.
@@ -133,7 +136,9 @@ in the self-created directory `emu_env`.
 ### Running the Simulated Target on QEMU
 
 Once the ELF-file (`./bin/boost_math_test_qemu.elf`) has been created,
-as shown above it, it can run in QEMU on the simulated target.
+as shown above. It can run in QEMU on the simulated target.
+
+We will now run on QEMU.
 
 In a command shell such as a bash session, run QEMU.
 
@@ -159,8 +164,8 @@ An example of _catching_ success based on the magic number
 `0xF00DCAFE` is shown, for instance,
 [here](https://github.com/ckormanyos/boost_math_test_qemu/blob/6be4ed755d56408925e2d8c40d9230a5c3fd3076/boost_math_test_qemu_cyl_bessel_j.cpp#L141).
 
-Based on the capture of success/failure, the value `0` (success)
-or `1` fail is returned as the result of the Python script.
+Based on the capture of success/failure, the value zero (for success)
+or non-zero (for fail) is returned as the result of the Python script.
 The LINUX operating system subsequently obtains this as pass/fail
 reason in each QEMU run in CI.
 
