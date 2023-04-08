@@ -57,7 +57,7 @@ auto boost::math::test::qemu::run_cbrt_tgamma() -> bool
 
   constexpr std::array<my_float_type, 11U> boost_math_test_qemu_control =
   {{
-    my_float_type(BOOST_FLOATMAX_C(0.939131814550229181011151980662907952)),
+    my_float_type(BOOST_FLOATMAX_C(1.939131814550229181011151980662907952)),
     my_float_type(BOOST_FLOATMAX_C(1.34645417009670049450881257836426513)),
     my_float_type(BOOST_FLOATMAX_C(2.24865197861464813284549389915695163)),
     my_float_type(BOOST_FLOATMAX_C(3.54010862139328036868593771662409929)),
