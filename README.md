@@ -139,11 +139,18 @@ for controlling GDB.
 
 The GDB session loads the ELF-file, runs it and
 assesses the value of a success/failure variable in a break-point
-in a key location on the embedded target. In this particular case,
-the internal magic number `0xF00DCAFE` is used to indicate
+in a key location on the embedded target.
+
+The internal magic number `0xF00DCAFE` is used to indicate
 success or failure of each numerical test in the brak point.
-Based on this success, the LINUX operating system captures the
-value and controls its own return value from the Python script.
+An example of _catching_ success based on the magic number
+`0xF00DCAFE` is shown, for instance,
+[here](https://github.com/ckormanyos/boost_math_test_qemu/blob/6be4ed755d56408925e2d8c40d9230a5c3fd3076/boost_math_test_qemu_cyl_bessel_j.cpp#L141).
+
+Based on the capture of success/failure, the value `0` (success)
+or `1` fail is returned as the result of the Python script.
+The LINUX operating system subsequently obtains this as pass/fail
+reason in each QEMU run in CI.
 
 ### Extract HEX and Demangled Symbols/Sizes
 

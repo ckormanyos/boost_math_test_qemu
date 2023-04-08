@@ -58,7 +58,7 @@ auto boost::math::test::qemu::run_cyl_bessel_j() -> bool
 
   constexpr my_float_control_array_type boost_math_test_qemu_control =
   {{
-    static_cast<my_float_type>(BOOST_FLOATMAX_C(1.022384094800424078635130529844793803)),
+    static_cast<my_float_type>(BOOST_FLOATMAX_C(0.022384094800424078635130529844793803)),
     static_cast<my_float_type>(BOOST_FLOATMAX_C(0.052329252391407531307435184345226877)),
     static_cast<my_float_type>(BOOST_FLOATMAX_C(0.085683437351809687785091267647371436)),
     static_cast<my_float_type>(BOOST_FLOATMAX_C(0.121101214488587461397609703216026929)),
